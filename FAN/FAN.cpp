@@ -7,9 +7,9 @@ FAN::FAN(uint8_t pin) {
 
 }
 
-void FAN::set_speed(int setspeed) {
+void FAN::set_speed(int fan_speed) {
 
-  speed = setspeed;
+  speed = fan_speed;
   analogWrite(_pin, speed);
 
 }

@@ -4,6 +4,7 @@ NISTTIME::NISTTIME(const char* host, int utc_offset) {
 
     _host = host;
     _utc_offset = utc_offset;
+    date_string = {"", "", "", "", ""};
 
 }
 
@@ -13,11 +14,17 @@ DateTime NISTTIME::datetime(void) {
 
   DateTime _datetime;
 
-  _datetime.hour = stringtime.substring(9,11).toInt() + _utc_offset; // adding the utc offset here...
-  _datetime.minute = stringtime.substring(12,14).toInt();
-  _datetime.day = stringtime.substring(6,8).toInt();
-  _datetime.month = stringtime.substring(3,5).toInt();
-  _datetime.year = stringtime.substring(0,2).toInt();
+  date_string.hour = String(stringtime.substring(9,11).toInt() + _utc_offset); // adding the utc offset here...
+  date_string.minute = stringtime.substring(12,14);
+  date_string.day = stringtime.substring(6,8);
+  date_string.month = stringtime.substring(3,5);
+  date_string.year = stringtime.substring(0,2);
+
+  _datetime.hour = date_string.hour.toInt(); // adding the utc offset here...
+  _datetime.minute = date_string.minute.toInt();
+  _datetime.day = date_string.day.toInt();
+  _datetime.month = date_string.month.toInt();
+  _datetime.year = date_string.year.toInt();
 
   return _datetime;
 
@@ -30,7 +37,7 @@ String NISTTIME::get_date(void) {
   WiFiClient client;
   if (!client.connect(_host, _http_port)) {
     Serial.println("connection failed");
-    return "";
+    return "00-00-00  00:00"; // String signaling connection error
   }
 
   // send the request to the server
@@ -45,7 +52,7 @@ String NISTTIME::get_date(void) {
     if (line.indexOf("Date") != -1) {
       Serial.print("=====>");
     } else {
-      // date starts at pos 7 ends at 27
+      // date starts at pos 7 ends at 24
       return line.substring(7,24);
     }
   }

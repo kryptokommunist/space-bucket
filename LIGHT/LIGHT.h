@@ -5,8 +5,8 @@
  #include "Arduino.h"
 #endif
 
-#include "REL.h"
-#include "NISTTIME.h"
+#include "../REL/REL.h"
+#include "../NISTTIME/NISTTIME.h"
 
 class LIGHT {
   public:

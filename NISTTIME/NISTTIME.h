@@ -17,10 +17,21 @@ struct DateTime {
 
 };
 
+struct DateTimeString {
+
+  String hour;
+  String minute;
+  String day;
+  String month;
+  String year;
+
+};
+
 class NISTTIME {
   public:
     NISTTIME(const char* host, int utc_offset);
     DateTime datetime(void);
+    DateTimeString date_string;
   private:
     const int _http_port = 13;
     const char* _host;
